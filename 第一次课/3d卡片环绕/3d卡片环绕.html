@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            height: 100%;
+            background-color: rgb(71, 72, 72);
+        }
+        .container{
+            margin: 0 auto;
+            width: 700px;
+            height: 700px;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective-origin: center top;
+            transform: rotateX(-10deg);
+            animation: run 30s linear infinite ;
+        }
+
+        @keyframes run {
+            0%{
+                transform: rotateX(-15deg) rotateY(0deg);
+            }
+            100%{
+                transform:rotateX(-15deg) rotateY(360deg);
+            }
+
+        }
+        .container div{
+            width: 200px;
+            height: 400px;
+            position: absolute;
+            top: 200px;
+            left: 250px;
+            background-color: lightblue;
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            
+        }
+        .container div:nth-child(1){
+            background-image: url("img/1.jpg");
+            transform: translateZ(500px);
+        }
+        .container div:nth-child(2){
+            background-image: url("img/2.jpg");
+            transform: translate3d(191PX,0PX,461PX) rotateY(22.5deg);
+            background-color: yellow;
+        }
+        .container div:nth-child(3){
+            background-image: url("img/3.jpg");
+            transform: translate3d(353PX,0PX,353PX) rotateY(45deg);
+        }
+        .container div:nth-child(4){
+            background-image: url("img/4.jpg");
+            transform: translate3d(461PX,0PX,191PX) rotateY(67.5deg);
+            background-color: yellow;
+        }
+        .container div:nth-child(5){
+            background-image: url("img/5.jpg");
+            transform: translate3d(500PX,0PX,0PX) rotateY(90deg);
+        }
+        .container div:nth-child(6){
+            background-image: url("img/6.jpg");
+            transform: translate3d(461PX,0PX,-191PX) rotateY(-67.5deg) rotateY(180deg);
+            background-color: red;
+        }
+        .container div:nth-child(7){
+            background-image: url("img/7.jpg");
+            transform: translate3d(353PX,0PX,-353PX) rotateY(-45deg) rotateY(180deg);
+        }
+        .container div:nth-child(8){
+            background-image: url("img/8.jpg");
+            transform: translate3d(191PX,0PX,-461PX) rotateY(-22.5deg) rotateY(180deg);
+        }
+
+        .container div:nth-child(9){
+            background-image: url("img/9.jpg");
+            transform: translateZ(-500px) rotateY(180deg);
+        }
+        .container div:nth-child(10){
+            background-image: url("img/10.jpg");
+            transform: translate3d(-191PX,0PX,-461PX) rotateY(22.5deg) rotateY(180deg);
+        }
+        .container div:nth-child(11){
+            background-image: url("img/12.jpg");
+            transform: translate3d(-353PX,0PX,-353PX) rotateY(45deg) rotateY(180deg);
+        }
+        .container div:nth-child(12){
+            background-image: url("img/13.jpg");
+            transform: translate3d(-461PX,0PX,-191PX) rotateY(67.5deg) rotateY(180deg);
+        }
+        .container div:nth-child(13){
+            background-image: url("img/14.jpg");
+            transform: translate3d(-500PX,0PX,0PX) rotateY(90deg) rotateY(180deg);
+        }
+        .container div:nth-child(14){
+            background-image: url("img/15.jpg");
+            transform: translate3d(-461PX,0PX,191PX) rotateY(-67.5deg);
+            background-color: red;
+        }
+        .container div:nth-child(15){
+            background-image: url("img/16.jpg");
+            transform: translate3d(-353PX,0PX,353PX) rotateY(-45deg);
+        }
+        .container div:nth-child(16){
+            background-image: url("img/2.jpg");
+            transform: translate3d(-191PX,0PX,461PX) rotateY(-22.5deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>5</div>
+        <div>6</div>
+        <div>7</div>
+        <div>8</div>
+        <div>9</div>
+        <div>10</div>
+        <div>11</div>
+        <div>12</div>
+        <div>13</div>
+        <div>14</div>
+        <div>15</div>
+        <div>16</div>
+    </div>
+</body>
+</html>
