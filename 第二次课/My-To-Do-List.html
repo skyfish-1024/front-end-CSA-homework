@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width: 50%;
+            margin: 0 auto;
+            border-radius: 30px 30px 0 0;
+            margin-top: 50px;
+
+            overflow: hidden;
+            background-color: pink;
+        }
+        .box h1{
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+            margin-top: 100px;
+            color: aliceblue;
+            /* background-color: lightblue; */
+        }
+        .header{
+            height: 140px;
+        }
+        .add{
+            width: 60%;
+            height: 50px;
+            margin: 0 auto;
+            border-radius: 20px;
+            /* background-color: yellow; */
+            overflow: hidden;
+        }
+        .add input{
+            border: 0;
+            outline: none;
+            width: 80%;
+            height: 100%;
+            float: left;
+            font-size: 20px;
+            line-height: 100%;
+            text-indent: 20px;
+        }
+        .add button{
+            height: 100%;
+            width: 20%;
+            border: 0;
+            display: block;
+            font-size: 20px;
+            background-color: palevioletred;
+        }
+        .things ul li{
+            width: 100%;
+            height: 60px;
+            line-height: 60PX;
+            text-align: center;
+            background-color: whitesmoke;
+        }
+        .things ul li input{
+            width: 30PX;
+            height: 100%;
+            display: block;
+            float: left;
+        }
+        .things ul li P{
+            height: 100%;
+            font-size: 30PX;
+            float: left;
+            color: black;
+        }
+        .things ul li button{
+            width: 40PX;
+            height: 100%;
+            display: block;
+            float: right;
+            border: 0;
+            color: black;
+            background-color:rgb(225, 56, 56);
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="header">
+            <h1>My To Do List</h1>
+            <div class="add">
+                <input type="text" placeholder="记录一下" id="add-input">
+                <button id="add-button">Add</button>
+            </div>
+        </div>
+        <div class="things">
+            <ul class="list">
+                <!-- <li>
+                    <input type="checkbox">
+                    <p>玩游戏</p>
+                    <button>X</button>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+    <script>
+        // var arr=[
+        //     {
+        //     content:"吃饭",
+        //     isFinish:"checked"
+        //     },
+        //     {
+        //     content:"睡觉",
+        //     isFinish:""
+        //     },
+        //     {
+        //     content:"学习",
+        //     isFinish:"checked"
+        //     },
+        //     {
+        //     content:"打游戏",
+        //     isFinish:""
+        //     },
+        // ]
+
+        //初始化
+        // var things = document.getElementsByClassName("things")
+        // var myUL = things[0].childNodes[1]
+        var listUl = document.getElementsByClassName("list")
+        var myUL=listUl[0]
+        console.log(myUL)
+        var listStr=getListStr()
+        var listArr=ObjStr_To_ObjArr(listStr,"#")
+        create(listArr)
+
+        //添加事项
+        var addInput = document.getElementById("add-input")
+        var addButton = document.getElementById("add-button")
+        addButton.onclick=function(){
+            if(!addInput.value){
+                alert("输入不能为空")
+                return
+            }
+            var obj = {
+                "content":addInput.value,
+                "isFinish":false,
+                "id":randomID()        
+            }
+            addToLi(obj,"rgb(225, 56, 56)")
+            listArr.push(obj)
+            listStr=ObjArr_To_ObjStr(listArr,"#")
+            saveListStr(listStr)
+        }
+        //末尾追加li节点
+        function addToLi(obj,color){
+            var li = document.createElement("li")
+            li.dataset.id=obj.id
+            li.style.backgroundColor=color
+            
+            var input=document.createElement("input")
+            input.type="checkbox"
+            input.checked=obj.isFinish
+            input.onclick=finish
+            li.appendChild(input)
+
+            var p=document.createElement("p")
+            p.innerHTML=obj.content
+            if(obj.isFinish) p.style.textDecoration="line-through"
+            p.style.backgroundColor=color
+            li.appendChild(p)
+
+            var button=document.createElement("button")
+            button.onclick = del
+            button.innerHTML="X"
+            button.style.backgroundColor=color
+            li.appendChild(button)
+
+            myUL.appendChild(li)
+        }
+
+        //勾选事项
+        function finish(){
+            var isFinish=this.checked
+            var id=this.parentNode.dataset.id
+            var color
+            if(isFinish){
+                color="gray"
+                this.nextSibling.style.textDecoration="line-through"
+                this.parentNode.style.backgroundColor=color
+                this.nextSibling.style.backgroundColor=color
+                this.nextSibling.nextSibling.style.backgroundColor=color
+            }else{
+                color="rgb(194, 227, 141)"
+                this.nextSibling.style.textDecoration="none"
+                this.parentNode.style.backgroundColor=color
+                this.nextSibling.style.backgroundColor=color
+                this.nextSibling.nextSibling.style.backgroundColor=color
+            }
+            for(var i=0;i<listArr.length;i++){
+                if(listArr[i].id===id)
+                {
+                    listArr[i].isFinish=isFinish
+                    break
+                }
+            }
+            listStr=ObjArr_To_ObjStr(listArr,"#")
+            saveListStr(listStr)
+        }
+        //删除事项
+        function del(){
+            var id=this.parentNode.dataset.id
+            for(var i=0;i<listArr.length;i++){
+                if(id===listArr[i].id){
+                    listArr.splice(i,1)
+                    listStr=ObjArr_To_ObjStr(listArr,"#")
+                    saveListStr(listStr)
+                    break
+                }
+            }
+            this.parentNode.remove()
+        }
+
+
+        //对象数组转换为对象字符串,mark为对象分割标志符，默认为“#”，可选
+        function ObjArr_To_ObjStr(ObjArr,mark){
+            if(ObjArr.length<=0) return ""
+            if(!mark) mark="#"
+            var tempArr=[]
+            for(var i=0;i<ObjArr.length;i++){
+                tempArr.push(JSON.stringify(ObjArr[i]))
+            }
+            var ObjStr=tempArr.join(mark)
+            return ObjStr || ""
+        }
+
+        //对象字符串转换为对象数组,mark为对象分割标志符，默认为“#”，可选
+        function ObjStr_To_ObjArr(ObjStr,mark){
+            if(!ObjStr) return []
+            if(!mark) mark="#"
+            var ObjArr=(ObjStr||"").split(mark)
+            for(var i=0;i<ObjArr.length;i++){
+                ObjArr[i]=JSON.parse(ObjArr[i])
+            }
+            return ObjArr
+        }
+
+        //本地存储listStr
+        function saveListStr(listStr){
+            localStorage.setItem("listStr",listStr)
+        }
+        
+        //本地获取listStr
+        function getListStr(){
+            return localStorage.getItem("listStr")
+        }
+
+        //创建代办事项---->li节点
+        function create(list){
+            var color
+            for(var i=0;i<list.length;i++){
+                if(list[i].isFinish){
+                    color="gray"
+                }
+                else if(i%2==0){
+                    color="lightblue"
+                }else{
+                    color="pink"
+                }
+                addToLi(list[i],color)
+            }
+        }
+        
+        //生成唯一id
+        function randomID() {
+            return Number(Math.random().toString().substr(2,0) + Date.now()).toString(36);
+        }
+    </script>
+</body>
+</html>

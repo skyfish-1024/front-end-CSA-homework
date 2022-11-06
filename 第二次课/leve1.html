@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var obj1={
+            name:"zzy",
+            age:"20"
+        }
+        console.log(obj1)
+
+        var obj2 = new Object()
+        obj2.value="ok"
+        console.log(obj2)
+        
+        var obj3 = Object.create(obj1,{
+            height:{
+                value:"190"
+            }
+        })   
+        console.log(obj3,obj3.name,obj3.age,obj3.height)
+    </script>
+</body>
+</html>
