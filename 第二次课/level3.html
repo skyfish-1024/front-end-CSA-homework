@@ -15,6 +15,27 @@
         function handler(item){
             return item*item
         }
+
+        Array.prototype.myMap=function(cb){
+            var _arr = this
+            var _len = _arr.length
+            var _arg = arguments || window
+            var _newArr = []
+            var _item
+            var _res
+
+            for(var i = 0;i<_len; i++){
+                _item = arr[i]
+                _res = cb.apply(_arg,[_item,i,_arr])
+                _res && _newArr.push(_res)
+            }
+            return _newArr
+        }
+
+        var arr3 =arr.myMap(function(item){
+            return item*item*item
+        })
+        console.log(arr3)
     </script>
 </body>
 </html>
