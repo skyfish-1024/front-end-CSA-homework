@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const person = {
+            name: 'bbh',
+            age: 30,
+            address: {
+                city: 'ChongQing',
+                area: 'NanShan'
+            },
+            title: ['student', { year: 2022, title: 'GoodStudent' }]
+        }
+        var { name } = person
+        var { age: year } = person
+        var { address: { city } } = person
+        var { address: { area: mountain } } = person
+
+        var { title: [title1,] } = person
+
+
+        var { title: [, { title: title2 }] } = person
+        var title3 = title2.slice(0, 2) + title2.slice(3, 4)
+
+        console.log(name) // bbh
+        console.log(year) // 30
+        console.log(city) // ChongQing 
+        console.log(mountain) // NanShan //这里没有写错，就是要输出NanShan，结合课件
+        console.log(title1) // student
+        console.log(title2) // GoodStudent
+        console.log(title3) // God 结合课件
+    </script>
+</body>
+
+</html>

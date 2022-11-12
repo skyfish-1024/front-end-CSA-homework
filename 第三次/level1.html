@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //递归
+        function factorial_1(n) {
+            if (n === 1) {
+                return 1
+            } else {
+                return factorial_1(n - 1) * n
+            }
+        }
+        //循环
+        function factorial_2(n) {
+            var result = 1
+            for (var i = 1; i <= n; i++) {
+                result = result * i
+            }
+            return result
+        }
+
+        var n = 4
+        var arr = []
+        for (var i = n; i >= 1; i--) {
+            arr.push(i)
+        }
+        console.log("递归：factorial_1(" + n + ") = " + arr.join(" * ") + " = " + factorial_1(n))
+        console.log("循环：factorial_2(" + n + ") = " + arr.join(" * ") + " = " + factorial_2(n))
+    </script>
+</body>
+
+</html>
