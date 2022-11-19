@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            position: relative;
+            top: 200px;
+            margin: 0 auto;
+            width: 400px;
+            height: 200px;
+            background-color: whitesmoke;
+            overflow: hidden;
+            text-align: center;
+            border-radius: 10px;
+            font-size: 20px;
+            overflow: hidden;
+            border: 1px solid gray;
+            box-shadow: 5px -5px gray;
+        }
+
+        #box img {
+            /* width: 100px; */
+            height: 100%;
+            float: left;
+        }
+
+        #a {
+            text-align: center;
+            display: block;
+            font-size: 22px;
+        }
+
+        #b {
+            margin: 20px 0px;
+            text-align: center;
+            display: block;
+            color: red;
+            font-size: 60px;
+            position: relative;
+        }
+
+        #c {
+            display: block;
+            position: absolute;
+            right: 40px;
+            top: 52px;
+            font-size: 20px;
+            color: black;
+        }
+
+        #Td {
+            position: relative;
+            bottom: 0px;
+            display: flex;
+            font-size: 16px;
+            align-items: baseline;
+            justify-content: center
+        }
+
+        .d {
+            background-color: lightgray;
+            width: 27px;
+            text-align: center;
+            font-size: 25px;
+            box-shadow: 3px 1px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbpic.588ku.com%2Fart_water_pic%2F21%2F02%2F02%2F463ab46657858e6a4b119dd018a6b66b.jpg&refer=http%3A%2F%2Fbpic.588ku.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671447198&t=9e87f77e3321763a3e6538dc566f7210"
+            alt="">
+        <span id="a">🎊距离新年还剩🎊</span>
+        <span id="b">
+            43
+            <span id="c">天</span>
+        </span>
+
+        <div id="Td">
+            <span class="d">8</span>
+            时
+            <span class="d">8</span>
+            分
+            <span class="d">8</span>
+            秒
+        </div>
+
+    </div>
+    <script>
+        var targetDate = new Date("2023/1/22")
+        //console.log(targetDate-currentDate) //时间戳差值
+        function diffTime(current, target) {
+            var sub = Math.ceil((target - current) / 1000)
+            var days = parseInt(sub / (60 * 60 * 24))
+            var hours = parseInt(sub % (60 * 60 * 24) / (60 * 60))
+            var minutes = parseInt(sub % (60 * 60) / 60)
+            var seconds = sub % 60
+            var obj = {
+                days: days,
+                hours: hours,
+                minutes: minutes,
+                seconds: seconds
+            }
+            return obj
+        }
+        function task() {
+            var currentDate = new Date()
+            var res = diffTime(currentDate, targetDate)
+
+            b.innerHTML = `${res.days}<span id="c">天</span>`
+            Td.innerHTML = `
+            <span class="d">${res.hours}</span>
+            时
+            <span class="d">${res.hours}</span>
+            分
+            <span class="d">${res.minutes}</span>
+            秒`
+        }
+        task()
+        setInterval(task(), 1000)
+
+    </script>
+</body>
+
+</html>

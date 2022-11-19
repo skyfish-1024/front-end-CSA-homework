@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: lightblue;
+        }
+
+        .box {
+            background-color: lightblue;
+            height: 600px;
+            width: 400px;
+            margin: 50px auto;
+            border-radius: 20px;
+            display: grid;
+            grid-template-rows: repeat(6, 17%);
+            grid-template-columns: repeat(4, 25%);
+            grid-template-areas:
+                'b  b b b '
+                'b1 b1 b2 b3  '
+                'a1 a2 a3 b4 '
+                'a4 a5 a6 b5 '
+                'a7 a8 a9 b6 '
+                'b7 a0 b8 b8 '
+            ;
+            /* grid-gap: 1px; */
+            overflow: hidden;
+            border: 1px gray solid;
+        }
+
+        .box div {
+            line-height: 100px;
+            font-size: 16px;
+            text-align: center;
+            border: 1px gray solid;
+        }
+
+        .box div:nth-child(1) {
+            font-size: 30px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+    </div>
+    <script>
+        class divSetting {
+            constructor(area, text, bgcolor, color, text_align, down, up) {
+                this.area = area
+                this.text = text
+                this.bgcolor = bgcolor
+                this.color = color
+                this.text_align = text_align
+                this.down = down
+                this.up = up
+            }
+        }
+        function addDiv(att) {
+            var box = document.documentElement.querySelector(".box")
+            var child = document.createElement("div")
+            child.onmousedown = function () {
+                child.style["opacity"] = att.down
+            }
+            child.onmouseup = function () {
+                child.style["opacity"] = att.up
+            }
+            child.style["grid-area"] = att.area
+            child.style["background"] = att.bgcolor
+            child.style["color"] = att.color
+            child.style["text-align"] = att.text_align
+            child.innerHTML = att.text
+            box.appendChild(child)
+        }
+        var ch = ["AC", "清除", "➗", "❌", "➕", "➖", ".", "="]
+        function init() {
+            //声明一个divSetting对象
+            let att1 = new divSetting("b", "0 &nbsp", "black", "white", "right", "1", "1")
+            //初始化输入框
+            addDiv(att1)
+
+            var att = new divSetting("b", "0 &nbsp", "gray", "black", "center", "0.5", "1")
+            //初始化操作符
+            for (let i = 0; i < ch.length; i++) {
+                if (i > 1 && i < 6) {
+                    att.bgcolor = "lightgray"
+                } else if (i === 7) {
+                    att.bgcolor = "orange"
+                } else {
+                    att.bgcolor = "white"
+                }
+                att.text = ch[i]
+                att.area = "b" + (i + 1)
+                addDiv(att)
+            }
+            //初始化数字键盘
+            att.bgcolor = "white"
+            att.color = "black"
+            for (let i = 0; i < 10; i++) {
+                att.text = i
+                att.area = "a" + i
+                addDiv(att)
+            }
+        }
+        init()
+        var box = document.documentElement.querySelector(".box")
+        var str1 = ""
+        var str2 = ""
+        var char = { char: "", n: 0 }
+        function op(ch) {
+            if (ch.n === 0) {
+                str2 = str1
+                str1 = "0"
+                ch.n = 1
+            }
+        }
+        box.onclick = function (evt) {
+            if (evt.target.innerHTML.indexOf("&nbsp") > -1) {
+                return
+                // console.log(1111)
+            }
+
+            var value = evt.target.innerText
+            if (value === ".") {
+                if (str1.indexOf(".") > -1) {
+                    return
+                }
+                if (!str1) {
+                    str1 = "0."
+                } else {
+                    str1 += value
+                }
+
+            } else if (ch.join("").indexOf(value) < 0) {
+                if (str1.indexOf(".") < 0 && Number(str1) === 0) {
+                    str1 = value
+                } else {
+                    str1 += value
+                }
+
+            } else {
+                switch (value) {
+                    case "AC":
+                        str1 = "0"
+                        break
+                    case "清除":
+                        str1 = str1.slice(0, -1)
+                        if (!str1) {
+                            str1 = "0"
+                        }
+                        break
+                    case "➗":
+                        char.char = "➗"
+                        op(char)
+                        break
+                    case "❌":
+                        char.char = "❌"
+                        op(char)
+                        break
+                    case "➕":
+                        char.char = "➕"
+                        op(char)
+                        break
+                    case "➖":
+                        char.char = "➖"
+                        op(char)
+                        break
+                    case "=":
+                        if (str1 && str2 && char.char && char.n) {
+                            var num1 = Number(str2)
+                            var num2 = Number(str1)
+                            switch (char.char) {
+                                case "➗":
+                                    str1 = String(num1 / num2)
+                                    char.n = 0
+                                    break
+                                case "❌":
+                                    str1 = String(num1 * num2)
+                                    char.n = 0
+                                    break
+                                case "➕":
+                                    str1 = String(num1 + num2)
+                                    char.n = 0
+                                    break
+                                case "➖":
+                                    var intRes = parseInt(num1 - num2)
+                                    var floatRes = (num1 - num2).toFixed(6)
+                                    if (intRes == floatRes) {
+                                        str1 = String(intRes)
+                                    } else {
+                                        str1 = String(floatRes)
+                                    }
+                                    char.n = 0
+                                    break
+                            }
+                        }
+                }
+            }
+            box.firstElementChild.innerHTML = str1 + "&nbsp&nbsp"
+        }
+    </script>
+</body>
+
+</html>

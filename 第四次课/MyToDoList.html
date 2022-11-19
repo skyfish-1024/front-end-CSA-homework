@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My to do List</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+            background-color: lightblue;
+            position: relative;
+        }
+
+        .box {
+            margin: 0 auto;
+            width: 390px;
+            height: 100%;
+            text-align: center;
+            position: relative;
+            background-color: lightblue;
+        }
+
+        .box h1 {
+            font-size: 25px;
+            display: block;
+            width: 190px;
+            top: 10PX;
+            left: calc(50% - 95px);
+            text-align: center;
+            position: relative;
+            /* background-color: aqua; */
+        }
+
+        .add {
+            position: relative;
+            width: 380px;
+            height: 60px;
+            top: 20px;
+            left: calc(50% - 190px);
+            overflow: hidden;
+            border-radius: 20px;
+            background-color: gray;
+        }
+
+        .add input {
+            height: 100%;
+            width: 85%;
+            border: 0;
+            float: left;
+            font-size: 25px;
+            outline: none;
+        }
+
+        .add button {
+            height: 100%;
+            width: 15%;
+            border: 0;
+            float: right;
+            font-size: 25px;
+        }
+
+        .list {
+            margin-top: 30px;
+            width: 380px;
+            max-height: calc(100% - 320px);
+            margin-left: calc(50% - 190px);
+            /* background-color: brown; */
+            list-style: none;
+            border-radius: 20px;
+            overflow-y: scroll;
+
+        }
+
+        .list li {
+            height: 60px;
+            line-height: 60px;
+            font-size: 25px;
+            overflow: hidden;
+            /* background-color: aliceblue; */
+        }
+
+        .list li div {
+            float: left;
+            width: 40px;
+            text-align: center;
+        }
+
+        .list li p {
+            float: left;
+            width: 75%;
+            height: 100%;
+            text-align: left;
+            color: white;
+            overflow: hidden;
+            overflow-y: scroll;
+        }
+
+        .list li button {
+            /* float: right; */
+            display: block;
+            height: 100%;
+            width: 50px;
+            border: 0;
+            font-size: 25px;
+            /* background-color: aliceblue; */
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* 倒计时 */
+        #box2 {
+            position: absolute;
+            /* position: absolute; */
+            left: calc(50% - 190px);
+            bottom: 2px;
+            margin: 0 auto;
+            width: 380px;
+            height: 200px;
+            background-color: whitesmoke;
+            overflow: hidden;
+            text-align: center;
+            border-radius: 10px;
+            font-size: 20px;
+            overflow: hidden;
+            border: 1px solid gray;
+        }
+
+        #box2 img {
+            /* width: 100px; */
+            height: 100%;
+            float: left;
+        }
+
+        #a {
+            text-align: center;
+            display: block;
+            font-size: 20px;
+        }
+
+        #b {
+            margin: 20px 0px;
+            text-align: center;
+            display: block;
+            color: red;
+            font-size: 60px;
+            position: relative;
+        }
+
+        #c {
+            display: block;
+            position: absolute;
+            right: 40px;
+            top: 52px;
+            font-size: 20px;
+            color: black;
+        }
+
+        #Td {
+            position: relative;
+            bottom: 0px;
+            display: flex;
+            font-size: 16px;
+            align-items: baseline;
+            justify-content: center
+        }
+
+        .d {
+            background-color: lightgray;
+            width: 27px;
+            text-align: center;
+            font-size: 25px;
+            box-shadow: 3px 1px gray;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <h1>My To Do List</h1>
+        <div class="add">
+            <input type="text">
+            <button>Add</button>
+        </div>
+        <ul class="list">
+
+        </ul>
+        <div id="box2">
+            <img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fbpic.588ku.com%2Fart_water_pic%2F21%2F02%2F02%2F463ab46657858e6a4b119dd018a6b66b.jpg&refer=http%3A%2F%2Fbpic.588ku.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1671447198&t=9e87f77e3321763a3e6538dc566f7210"
+                alt="">
+            <span id="a">🎊距离新年还剩🎊</span>
+            <span id="b">
+                43
+                <span id="c">天</span>
+            </span>
+
+            <div id="Td">
+                <span class="d">8</span>
+                时
+                <span class="d">8</span>
+                分
+                <span class="d">8</span>
+                秒
+            </div>
+
+        </div>
+    </div>
+    <script>
+
+        //to do list
+        class List {
+            constructor(content) {
+                this.content = content
+                this.isFinish = 0
+                this.color = randomColor()
+                this.id = randomID()
+
+            }
+        }
+        var listUl = document.getElementsByClassName("list")[0]
+        // console.log(listUl)
+        var listStr = getListStr("listStr")
+        var listArr = ObjStr_To_ObjArr(listStr, "#")
+        create(listArr)
+
+        //添加事项
+        var add = document.getElementsByClassName("add")[0]
+        var addInput = add.querySelector("input")
+        var addButton = add.querySelector("button")
+
+        addButton.onclick = function () {
+            var content = addInput.value
+            if (!content) {
+                alert("输入不能为空")
+                return
+            }
+
+            var obj = new List(content)
+
+            addLi(listUl, obj)
+            addInput.value = ""
+
+            listArr.push(obj)
+            listStr = ObjArr_To_ObjStr(listArr, "#")
+            saveListStr("listStr", listStr)
+        }
+        //末尾追加li节点
+        function addLi(myUL, obj) {
+            let li = document.createElement("li")
+            li.dataset.id = obj.id
+            li.style.backgroundColor = obj.color
+
+            let div = document.createElement("div")
+            if (obj.isFinish === '1') {
+                div.dataset.isFinish = obj.isFinish
+                div.innerText = "😁"
+            } else {
+                div.dataset.isFinish = obj.isFinish
+                div.innerText = "🤔"
+            }
+            div.onclick = finish
+            li.appendChild(div)
+
+            var p = document.createElement("p")
+            p.innerHTML = obj.content
+            if (obj.isFinish === '1') p.style.textDecoration = "line-through"
+            p.style.backgroundColor = obj.color
+            li.appendChild(p)
+
+            var button = document.createElement("button")
+            button.onclick = del
+            button.innerHTML = "❌"
+            button.style.backgroundColor = obj.color
+            li.appendChild(button)
+
+            myUL.appendChild(li)
+        }
+
+        //勾选事项
+        function finish() {
+            var isFinish = this.dataset.isFinish
+            var id = this.parentNode.dataset.id
+            var color
+            if (isFinish === '0') {
+                isFinish = '1'
+                color = "gray"
+                this.innerText = "😁"
+                this.dataset.isFinish = isFinish
+                this.nextSibling.style.textDecoration = "line-through"
+                this.parentNode.style.backgroundColor = color
+                this.nextSibling.style.backgroundColor = color
+                this.nextSibling.nextSibling.style.backgroundColor = color
+            } else {
+                color = randomColor()
+                isFinish = '0'
+                this.innerText = "🤔"
+                this.dataset.isFinish = isFinish
+                this.nextSibling.style.textDecoration = "none"
+                this.parentNode.style.backgroundColor = color
+                this.nextSibling.style.backgroundColor = color
+                this.nextSibling.nextSibling.style.backgroundColor = color
+            }
+            for (var i = 0; i < listArr.length; i++) {
+                if (listArr[i].id === id) {
+                    listArr[i].isFinish = isFinish
+                    listArr[i].color = color
+                    break
+                }
+            }
+            listStr = ObjArr_To_ObjStr(listArr, "#")
+            saveListStr("listStr", listStr)
+        }
+
+        //删除事项
+        function del() {
+            var yes = confirm("您确认要删除该事项吗？")
+            if (!yes) {
+                return
+            }
+            var id = this.parentNode.dataset.id
+            for (var i = 0; i < listArr.length; i++) {
+                if (id === listArr[i].id) {
+                    listArr.splice(i, 1)
+                    listStr = ObjArr_To_ObjStr(listArr, "#")
+                    saveListStr("listStr", listStr)
+                    break
+                }
+            }
+            this.parentNode.remove()
+        }
+
+
+        //对象数组转换为对象字符串,mark为对象分割标志符，默认为“#”，可选
+        function ObjArr_To_ObjStr(ObjArr, mark) {
+            if (ObjArr.length <= 0) return ""
+            if (!mark) mark = "#"
+            var tempArr = []
+            for (var i = 0; i < ObjArr.length; i++) {
+                tempArr.push(JSON.stringify(ObjArr[i]))
+            }
+            var ObjStr = tempArr.join(mark)
+            return ObjStr || ""
+        }
+
+        //对象字符串转换为对象数组,mark为对象分割标志符，默认为“#”，可选
+        function ObjStr_To_ObjArr(ObjStr, mark) {
+            if (!ObjStr) return []
+            if (!mark) mark = "#"
+            var ObjArr = (ObjStr || "").split(mark)
+            for (var i = 0; i < ObjArr.length; i++) {
+                ObjArr[i] = JSON.parse(ObjArr[i])
+            }
+            return ObjArr
+        }
+
+        //本地存储listStr
+        function saveListStr(key, value) {
+            localStorage.setItem(key, value)
+        }
+
+        //本地获取listStr
+        function getListStr(key) {
+            return localStorage.getItem(key)
+        }
+
+        //创建代办事项---->li节点
+        function create(list) {
+            for (var i = 0; i < list.length; i++) {
+                addLi(listUl, list[i])
+            }
+        }
+
+        //生成唯一id
+        function randomID() {
+            return Number(Math.random().toString().substr(2, 0) + Date.now()).toString(36);
+        }
+
+        //生成随机颜色
+        function randomColor() {
+            var red = parseInt(Math.random() * 255)
+            var blue = parseInt(Math.random() * 255)
+            var green = parseInt(Math.random() * 255)
+            var color = `rgb(${red},${blue},${green})`
+            return color
+        }
+
+
+    </script>
+</body>
+
+</html>
