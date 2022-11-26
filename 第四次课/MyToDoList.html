@@ -418,13 +418,13 @@
             Td.innerHTML = `
             <span class="d">${res.hours}</span>
             时
-            <span class="d">${res.hours}</span>
-            分
             <span class="d">${res.minutes}</span>
+            分
+            <span class="d">${res.seconds}</span>
             秒`
         }
         task()
-        setInterval(task(), 1000)
+        setInterval(task, 1000)
     </script>
 </body>
 
