@@ -93,29 +93,27 @@
 
         //方式三：
         async function move2() {
-            await setTimeout(() => {
-                move(a)
-            }, 1000)
-            await setTimeout(() => {
-                move(b)
-            }, 2000)
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    move(a)
+                    resolve()
+                }, 1000)
+            })
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    move(b)
+                    resolve()
+                }, 1000)
+            })
+            await new Promise((resolve) => {
+                setTimeout(() => {
+                    move(c)
+                    resolve()
+                }, 1000)
+            })
 
-            await setTimeout(() => {
-                move(c)
-            }, 3000)
         }
         move2()
-
-        // function sleep(Millisecond) {
-        //     var nowTime = new Date()
-        //     var exitTime = nowTime.getTime() + Millisecond
-        //     while (true) {
-        //         nowTime = new Date()
-        //         if (nowTime.getTime() > exitTime) {
-        //             return
-        //         }
-        //     }
-        // }
     </script>
 </body>
 
