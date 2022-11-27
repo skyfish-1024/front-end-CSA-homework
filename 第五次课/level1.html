@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #box {
+            width: 300px;
+            height: 600px;
+            margin: 0 auto;
+            background-color: yellow;
+            overflow: hidden;
+        }
+
+        #box div {
+            width: 100px;
+            height: 100px;
+            margin: 50px 0px;
+            border-radius: 50%;
+            transition: all 1s linear;
+
+        }
+
+        #a {
+            background-color: blue;
+        }
+
+        #b {
+            background-color: orange;
+        }
+
+        #c {
+            background-color: gray;
+        }
+
+        #box:hover #a {
+            transform: translateX(200px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div id="a"></div>
+        <div id="b"></div>
+        <div id="c"></div>
+    </div>
+    <script>
+        var box = document.getElementById("box")
+        var a = document.getElementById("a")
+        var b = document.getElementById("b")
+        var c = document.getElementById("c")
+
+
+        function move(node) {
+            node.style.transform = `translateX(200px)`
+        }
+        //方式一：
+        // setTimeout(() => {
+        //     move(a)
+        //     setTimeout(() => {
+        //         move(b)
+        //         setTimeout(() => {
+        //             move(c)
+        //         }, 1000)
+        //     }, 1000)
+        // }, 1000)
+
+
+        //方式二：
+        // new Promise((resolve, reject) => {
+        //     setTimeout(() => {
+        //         move(a)
+        //     }, 1000)
+        //     resolve()
+        // }).then(() => {
+        //     setTimeout(() => {
+        //         move(b)
+        //     }, 2000)
+        // }).then(() => {
+        //     setTimeout(() => {
+        //         move(c)
+        //     }, 3000)
+        // })
+
+        //方式三：
+        async function move2() {
+            await setTimeout(() => {
+                move(a)
+            }, 1000)
+            await setTimeout(() => {
+                move(b)
+            }, 2000)
+
+            await setTimeout(() => {
+                move(c)
+            }, 3000)
+        }
+        move2()
+
+        // function sleep(Millisecond) {
+        //     var nowTime = new Date()
+        //     var exitTime = nowTime.getTime() + Millisecond
+        //     while (true) {
+        //         nowTime = new Date()
+        //         if (nowTime.getTime() > exitTime) {
+        //             return
+        //         }
+        //     }
+        // }
+    </script>
+</body>
+
+</html>

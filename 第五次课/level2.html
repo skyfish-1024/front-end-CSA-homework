@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //注册定时任务，进入任务队列
+        setTimeout(() => {
+            console.log('setTimeout start');//5、输出
+            new Promise((resolve) => {
+                console.log('promise1 start');//6、输出
+                resolve();
+            }).then(() => {
+                console.log('promise1 end');//8、输出
+            })
+            console.log('setTimeout end');//7、输出
+        }, 0);
+
+        function promise2() {
+            return new Promise((resolve) => {
+                console.log('promise2');//2、输出
+                resolve();
+            })
+        }
+
+        async function async1() {
+            console.log('async1 start');//1、输出
+            await promise2();//线程阻塞，等待promise2执行完毕。promise2执行完，异步结束
+            console.log('async1 end');//4、输出
+        }
+        async1();//异步函数，开始执行
+        console.log('script end');//3、输出
+    </script>
+</body>
+
+</html>
