@@ -6,93 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!--最大宽度为500px,也就是小屏移动端，使用mobile.css-->
+    <link rel="stylesheet" media="(max-width: 980px)" href="./css/mobile.css" />
+
+    <!--最小宽度为980px,也就是大屏PC端，使用PC.css-->
+    <link rel="stylesheet" media="(min-width: 980px)" href="./css/pc.css" />
     <style>
         * {
             margin: 0;
             padding: 0;
         }
 
-        .head {
-            width: 100vw;
-            background-color: #d73a31;
-            height: 70px;
-            font-size: 16px;
+        html::-webkit-scrollbar {
+            display: none;
         }
 
-        .head img {
-            float: left;
-            margin-top: calc(35px - 12.5px);
-            height: 25px;
-        }
-
-        .head div {
-            float: right;
-            margin-right: 16px;
-            height: 25px;
-            width: 80px;
-            text-align: center;
-            border-radius: 20px;
-            line-height: 25px;
-            margin-top: calc(35px - 12.5px);
-            background-color: whitesmoke;
-            color: #d73a31;
-        }
-
-        ul {
-            list-style: none;
-        }
-
-        .navigation {
-            height: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            align-content: space-around;
-        }
-
-        .navigation li {
-            margin: 10%;
-            text-align: center;
-        }
-
-        .active {
-            color: #d73a31;
-            border-bottom: 2px solid #d73a31;
-        }
-
-        .rDiv {
-            border-left: 2px solid #d73a31;
-            text-indent: 5px;
-            margin-bottom: 2px;
-        }
-
-        .recommend {
-            position: relative;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-content: space-between;
-        }
-
-        .recommend li {
-            position: relative;
-            width: 33.1vw;
-            margin-top: 10px;
-        }
-
-        .recommend li img {
-            width: 100%;
-        }
-
-        .recommend li span {
-            position: absolute;
-            z-index: 10;
-            right: 2px;
-            color: white;
-        }
-
-        .recommend li p {
-            font-size: 12px;
+        html,
+        body {
+            font-size: 2vw;
+            min-width: 270px;
         }
     </style>
 </head>
@@ -109,6 +41,36 @@
     </ul>
     <div class="rDiv">编辑推荐</div>
     <ul class="recommend">
+        <li>
+            <img src="http://t13.baidu.com/it/u=3097387541,916288027&fm=224&app=112&f=JPEG?w=500&h=500" alt="">
+            <span>🎧999</span>
+            <p>完成网易云音乐移动网页版的编辑推荐部分</p>
+        </li>
+        <li>
+            <img src="http://t13.baidu.com/it/u=3097387541,916288027&fm=224&app=112&f=JPEG?w=500&h=500" alt="">
+            <span>🎧999</span>
+            <p>完成网易云音乐移动网页版的编辑推荐部分</p>
+        </li>
+        <li>
+            <img src="http://t13.baidu.com/it/u=3097387541,916288027&fm=224&app=112&f=JPEG?w=500&h=500" alt="">
+            <span>🎧999</span>
+            <p>完成网易云音乐移动网页版的编辑推荐部分</p>
+        </li>
+        <li>
+            <img src="http://t13.baidu.com/it/u=3097387541,916288027&fm=224&app=112&f=JPEG?w=500&h=500" alt="">
+            <span>🎧999</span>
+            <p>完成网易云音乐移动网页版的编辑推荐部分</p>
+        </li>
+        <li>
+            <img src="http://t13.baidu.com/it/u=3097387541,916288027&fm=224&app=112&f=JPEG?w=500&h=500" alt="">
+            <span>🎧999</span>
+            <p>完成网易云音乐移动网页版的编辑推荐部分</p>
+        </li>
+        <li>
+            <img src="http://t13.baidu.com/it/u=3097387541,916288027&fm=224&app=112&f=JPEG?w=500&h=500" alt="">
+            <span>🎧999</span>
+            <p>完成网易云音乐移动网页版的编辑推荐部分</p>
+        </li>
         <li>
             <img src="http://t13.baidu.com/it/u=3097387541,916288027&fm=224&app=112&f=JPEG?w=500&h=500" alt="">
             <span>🎧999</span>
