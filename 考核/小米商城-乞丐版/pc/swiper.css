@@ -1,0 +1,71 @@
+.site-swiper {
+    height: 460px;
+}
+
+.picture {
+    height: 460px;
+    width: 992px;
+    background-color: yellow;
+    position: relative;
+    left: 234px;
+    float: left;
+}
+
+.picture img {
+    position: absolute;
+    height: 100%;
+    opacity: 1;
+    transition: all, 2s;
+}
+
+/* .picture img:nth-child(1) {
+    opacity: 1;
+} */
+
+.picture>div {
+    position: absolute;
+    top: 50%;
+    width: 41px;
+    height: 69px;
+    line-height: 69px;
+    margin-top: -35px;
+    z-index: 10;
+    cursor: pointer;
+    outline: none;
+}
+
+.pre {
+    left: 0;
+    background-color: aqua;
+}
+
+.next {
+    right: 0;
+    background-color: aqua;
+}
+
+.mark {
+    position: absolute;
+    right: 0;
+    top: 460px !important;
+    width: 100px !important;
+    z-index: 10;
+    display: flex;
+}
+
+.mark>div {
+    flex-direction: row;
+    /* justify-content: left; */
+    margin: 0 3px;
+    width: 8px;
+    height: 8px;
+    border-radius: 5px;
+    border: 1px solid #424242;
+    background-color: #424242;
+    box-shadow: inset;
+    /* z-index: 10; */
+}
+
+.mark>div:nth-child(1) {
+    background: #fff;
+}
