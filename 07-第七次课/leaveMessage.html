@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,body{
+            margin: 0;
+            padding: 0;
+            background-color: #D3D3D3;
+        }
+        .box,.box1{
+            margin: 0 auto;
+            position: relative;
+            width: 500px;
+            border: 1px solid red;
+            text-align: center;
+            background-color: #4DAC77;
+        }
+        .register{
+            /* display: none; */
+        }
+
+        #chat{
+            margin: 0 auto;
+            position: relative;
+            width: 600px;
+            height: 550px;
+            border: 1px solid red;
+            text-align: center;
+            overflow: scroll;
+
+        }
+        .user{
+            height: 70px;
+            /* overflow: hidden; */
+            margin-bottom: 5px;
+            display: flex;
+            background-color: #FFC340;
+            border-radius: 10px;
+        }
+        .avatar{
+            text-align: left;
+            margin-left: 10px;
+            border-radius: 10px;
+        }
+        .avatar .username,img{
+            white-space: nowrap;
+            width: 60px;
+        }
+        .avatar img{
+            height: 50px;
+            width: 50px;
+        }
+
+        .user .message{
+            line-height: 70px;
+            width: 460px;
+            text-align: left;
+            background-color: #7093BB;
+            border-radius: 10px;
+        }
+        .right{
+            display: flex;
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+    </style>
+    <script>
+    
+    </script>
+</head>
+<body>
+    <div class="box">
+        <div class="register">
+            <span>昵称：</span>
+            <input type="text" id="registerUsername">
+            <button id="registerBt">注册</button>
+        </div>
+        <div class="login">
+            <span>昵称：</span>
+            <input type="text" id="loginUsername">
+            <button id="loginBt">登录</button>
+        </div>
+        <div class="username">
+            <span>当前登录用户：</span>
+            <span>SkyFish</span>
+        </div>
+    </div>
+    
+    <div id="chat">
+
+    </div>
+    <div class="box1">
+    <input type="text" id="sendMsg" style="width: 300px;height: 30px;">
+    <button id="sendBt">发送</button>
+    </div>
+
+    <script>
+    const baseUrl="http://runninglili.club:8080"
+    var token=localStorage.getItem("token")
+    var userString=localStorage.getItem("user")
+    var userObj=userString? JSON.parse(userString):{username:""}
+    function getMessage(){
+        fetch(`${baseUrl}/getAllMessages`).then(res => {
+                // console.log(res)
+                if (res.status==200) {
+                    return res.json()
+                } else {
+                    //拒绝
+                    return Promise.reject({
+                        status: res.status,
+                        statusText: res.statusText
+                    })
+                }
+            }).then(res => {
+                    var chat=document.getElementById('chat')
+                    var len=chat.childNodes.length
+                    for(var i=0;i<len;i++){
+                        chat.removeChild(chat.childNodes[0])
+                    }
+                for(var i=0;i<res.length;i++)
+                {
+                    renderMessage(res[i])
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+    function renderMessage(data){
+        var user=document.createElement('div')
+        user.classList.add("user")
+
+        var avatar=document.createElement('div')
+        avatar.classList.add("avatar")
+
+        var username=document.createElement('div')
+        username.classList.add("username")
+        username.innerText=data.username
+
+        var message=document.createElement('div')
+        message.classList.add("message")
+        message.innerText=data.words
+
+        var img=document.createElement('img')
+        img.src=data.avatar
+
+        if (userObj.username==data.username){
+            user.classList.add("right")
+            message.classList.add("right")
+            
+        }
+        avatar.appendChild(username)
+        avatar.appendChild(img)
+
+        user.appendChild(avatar)
+        user.appendChild(message)
+
+
+        var chat=document.getElementById('chat')
+        chat.appendChild(user)
+    }
+    function register(){
+        var username=document.getElementById('registerUsername')
+        if(!username.value)
+        {
+            alert("昵称不能为空！")
+            return
+        }
+        fetch(`${baseUrl}/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                mode: "cors",
+                body:`username=${username.value} `
+            }).then(res => {
+                // console.log(res)
+                if (res.status==200) {
+                    return res.json()
+                } else {
+                    //拒绝
+                    return Promise.reject({
+                        status: res.status,
+                        statusText: res.statusText
+                    })
+                }
+            }).then(res => {
+                alert(res.mes)
+                if(res.code==200){
+                    username.value=''
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        console.log(username.value)
+    }
+    function login(){
+        var username=document.getElementById('loginUsername')
+        if(!username.value)
+        {
+            alert("昵称不能为空！")
+            return
+        }
+        fetch(`${baseUrl}/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                mode: "cors",
+                body:`username=${username.value} `
+            }).then(res => {
+                // console.log(res)
+                if (res.status==200) {
+                    return res.json()
+                } else {
+                    //拒绝
+                    return Promise.reject({
+                        status: res.status,
+                        statusText: res.statusText
+                    })
+                }
+            }).then(res => {
+                alert(res.mes)
+                if(res.code!=403){
+                    userObj=res.data
+                    token=res.token
+                    localStorage.setItem("token",token)
+                    localStorage.setItem("user",JSON.stringify(userObj))
+                    username.value=''
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+    function send(){
+        var sendMsg=document.getElementById('sendMsg')
+        if(!sendMsg.value)
+        {
+            alert("内容不能为空！")
+            return
+        }
+        fetch(`${baseUrl}/sendMes`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "Authorization":token
+                },
+                mode: "cors",
+                body:`words=${sendMsg.value} `
+            }).then(res => {
+                console.log(res)
+                if (res.status==200) {
+                    return res.json()
+                } else {
+                    //拒绝
+                    return Promise.reject({
+                        status: res.status,
+                        statusText: res.statusText
+                    })
+                }
+            }).then(res => {
+                console.log(res)
+                if(res.code==403){
+                    alert(res.mes)
+                }
+                sendMsg.value=''
+                getMessage()
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+    var registerBt=document.getElementById('registerBt')
+    registerBt.onclick=register
+    var loginBt=document.getElementById('loginBt')
+    loginBt.onclick=login
+    var sendBt=document.getElementById('sendBt')
+    sendBt.onclick=send
+    getMessage()
+
+    </script>
+</body>
+</html>
